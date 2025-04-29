@@ -5,25 +5,18 @@
 %       'planes_d=0.5_l=[16x16]_s=[16x16]',
 %       'Z_d=0.5_l=[1x1]_s=[256x256]'];
 %       'usaf_d=0.5_l=[1x1]_s=[256x256]';
-name = ['Z_d=0.5_l=[1x1]_s=[256x256]'];             % Dataset name
+name = ['usaf_d=0.5_l=[1x1]_s=[256x256]'];             % Dataset name
 
-%nVoxels=[2,4,8,16,32,64]
-nVoxels = 1;                                     % Voxel resolution (x, y, z)
+signalDegradation = false;                        % Signal degradation option (true/false)
+photon_counts = 1e6;                             % Photon counts for Poisson noise (in photons) [1e4, 1e5, 1e6, 1e7, 1e8]
+focal_plane = 0.5;                               % Unique focal plane distance (in meters) for multipleFocalPlanes == false
 
-isFiltered = true;                              % Is the dataset filtered?
-isAttenuated = true;                            % Is the dataset attenuated?
-isPhasedFiltered = false;                        % Is the dataset phase filtered?
+multipleFocalPlanes = true;                     % Multiple focal planes option (true/false)
+num_planes = 20; %200
+minPlaneDistance = 0.3; %0.3                     % Minimum distance between planes (in meters)
+maxPlaneDistance = 0.7; %2.5                     % Maximum distance between planes (in meters)
 
-isPhasedOption1 = false;                         % Uses sigma as lambda_c/(2*log2), otherwise uses 2*lambda_c
-
-signalDegradation = false;                     % Signal degradation option (true/false)
-multipleFocalPlanes = false;                     % Multiple focal planes option (true/false)
-num_planes = 20;
-minPlaneDistance = 0.2;                        % Minimum distance between planes (in meters)
-maxPlaneDistance = 1.5;                        % Maximum distance between planes (in meters)
-
-isMultiFrequency = true;
+isMultiFrequency = false;
+isNarrowBand = false;                            % Narrowband option (true/false)
 
 dataset_path = strcat('data/', name, '.mat');           % Path to the dataset
-volume_path = strcat('results/', name, '_', num2str(nVoxels), ...   % Path to save the volume
-  '_', num2str(isFiltered), '_', num2str(isAttenuated), '_', num2str(isPhasedFiltered), '.mat');
